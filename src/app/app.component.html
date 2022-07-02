@@ -1,0 +1,83 @@
+<mat-card class="container p-2">
+  <div class="container text-center">
+    <div> 
+      <label>Select Date:</label>
+      <input type="datetime-local">
+      <button mat-button (click)="loadData()">Load</button>
+    </div>
+    <div [formGroup]="AddTimeDataForm">
+
+      <input type="datetime-local" formControlName="startTime" placeholder="startTime">
+
+
+      <input type="datetime-local" formControlName="endTime" placeholder="endTime">
+      <input type="text" formControlName="description" placeholder="description">
+
+      <button mat-button (click)="addRowData(AddTimeDataForm.value)" mat-flat-button color="primary">Add</button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
+
+      <!-- <ng-container matColumnDef="Start Time">
+        <th mat-header-cell *matHeaderCellDef> Start Time. </th>
+        <td mat-cell *matCellDef="let element"> {{element.startTime}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="End Time">
+        <th mat-header-cell *matHeaderCellDef> End Time. </th>
+        <td mat-cell *matCellDef="let element"> {{element.endTime}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Minutes">
+        <th mat-header-cell *matHeaderCellDef> Minutes </th>
+        <td mat-cell *matCellDef="let element"> {{element.minutes}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element;  let i = index" class="action-link">
+          <button mat-button (click)="openDialog('Update',element[i])">Edit</button> |
+          <button mat-button (click)="openDialog('Delete',element[i])">Delete</button>
+        </td>
+      </ng-container> -->
+      <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
+        <th mat-header-cell *matHeaderCellDef> {{column !== 'operation'? column : ''}} </th>
+
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="column === 'Start Time'">
+            {{element.startTime}}
+          </div>
+
+          <div *ngIf="column === 'End Time'">
+            {{element.endTime}}
+          </div>
+
+          <div *ngIf="column === 'Minutes'">
+            {{element.minutes}}
+          </div>
+
+          <div *ngIf="column === 'Description'">
+            {{element.description}}
+          </div>
+
+          <div *ngIf="column === 'operation'">
+            <button mat-button (click)="openDialog('Update',element)">Edit</button> |
+            <button mat-button (click)="openDialog('Delete',element)">Delete</button>
+          </div>
+        </td>
+
+      
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</mat-card>
